@@ -156,6 +156,12 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        hash_index = self.hash_index(key)
+        if self.storage[hash_index] is None:
+            print("key not found.")
+            return
+        else:
+            return self.storage[hash_index].remove(key)
 
 
     def get(self, key):
