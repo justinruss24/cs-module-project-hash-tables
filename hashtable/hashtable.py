@@ -136,6 +136,15 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        if self.get_load_factor() > self.max_load_factor:
+            self.resize(self.capacity * 2)
+        hash_index = self.hash_index(key)
+        if self.storage[hash_index] is None:
+            ll = LinkedList()
+            ll.insert_at_head(key, value)
+            self.storage[hash_index] = ll
+        else:
+            self.storage[hash_index].insert_at_head(key, value)
 
 
     def delete(self, key):
