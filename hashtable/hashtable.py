@@ -164,6 +164,13 @@ class HashTable:
         index = self.hash_index(key)
         self.storage[index].value = None
 
+        # hash_index = self.hash_index(key)
+        # if self.storage[hash_index] is None:
+        #     print("Key is not found.")
+        #     return
+        # else:
+        #     return self.storage[hash_index].remove(key)
+
 
     def get(self, key):
         """
@@ -177,6 +184,15 @@ class HashTable:
         index = self.hash_index(key)
         return self.storage[index].value
 
+        # hash_index = self.hash_index(key)
+        # if self.storage[hash_index] is None:
+        #     return None
+        # else:
+        #     entry = self.storage[hash_index].find(key)
+        #     if not entry:
+        #         return None
+        #     return entry.value
+
 
     def resize(self, new_capacity):
         """
@@ -186,6 +202,17 @@ class HashTable:
         Implement this.
         """
         # Your code here
+
+        old_table = self.storage
+        self.storage = [None] * new_capacity
+        self.capacity = new_capacity
+
+        for x in old_table:
+            if x:
+                current = x.head
+                while current is not None:
+                    self.put(current.key, current.value)
+                    current = current.next
 
 
 
