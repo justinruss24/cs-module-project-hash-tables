@@ -7,6 +7,52 @@ class HashTableEntry:
         self.value = value
         self.next = None
 
+class LinkedList:
+    def __init__(self):
+        self.head = None
+        self.length = 0
+
+    def find(self, key):
+        current = self.head
+
+        while current is not None and current.key != key:
+            current = current.next
+
+        return current
+
+    def insert_at_head(self, key, value):
+        current = self.head
+
+        while current is not None:
+            if current.key == key:
+                current.value = value
+                return
+            current = current.next
+
+        new_entry = HashTableEntry(key, value)
+        new_entry.next = self.head
+        self.head = new_entry
+        self.length += 1
+    
+    def remove(self, key):
+        current = self.head
+        next_node = current.next
+        if current.key == key:
+            self.head = next_node
+            self.length -= 1
+            return current.value
+
+        while next_node is not None:
+            if next_node.key == key:
+                removed = next_node
+                current.next = next_node.next
+                self.length -= 1
+                return removed.value
+
+            current = next_node
+            next_node = current.next
+
+        return None
 
 # Hash table can't have fewer than this many slots
 MIN_CAPACITY = 8
@@ -24,6 +70,7 @@ class HashTable:
         # Your code here
         self.capacity = capacity
         self.storage = [None] * self.capacity
+        # self.max_load_factor = 0.7
 
 
     def get_num_slots(self):
@@ -94,6 +141,15 @@ class HashTable:
         index = self.hash_index(key)
         entry = HashTableEntry(key, value)
         self.storage[index] = entry
+        # if self.get_load_factor() > self.max_load_factor:
+        #     self.resize(self.capacity * 2)
+        # hash_index = self.hash_index(key)
+        # if self.storage[hash_index] is None:
+        #     ll = LinkedList()
+        #     ll.insert_at_head(key, value)
+        #     self.storage[hash_index] = ll
+        # else:
+        #     self.storage[hash_index].insert_at_head(key, value)
 
 
     def delete(self, key):
