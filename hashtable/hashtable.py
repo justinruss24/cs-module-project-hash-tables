@@ -70,7 +70,7 @@ class HashTable:
         # Your code here
         self.capacity = capacity
         self.storage = [None] * self.capacity
-        # self.max_load_factor = 0.7
+        self.max_load_factor = 0.7
 
 
     def get_num_slots(self):
@@ -138,18 +138,19 @@ class HashTable:
         Implement this.
         """
         # Your code here
-        index = self.hash_index(key)
-        entry = HashTableEntry(key, value)
-        self.storage[index] = entry
-        # if self.get_load_factor() > self.max_load_factor:
-        #     self.resize(self.capacity * 2)
-        # hash_index = self.hash_index(key)
-        # if self.storage[hash_index] is None:
-        #     ll = LinkedList()
-        #     ll.insert_at_head(key, value)
-        #     self.storage[hash_index] = ll
-        # else:
-        #     self.storage[hash_index].insert_at_head(key, value)
+        # index = self.hash_index(key)
+        # entry = HashTableEntry(key, value)
+        # self.storage[index] = entry
+        
+        if self.get_load_factor() > self.max_load_factor:
+            self.resize(self.capacity * 2)
+        hash_index = self.hash_index(key)
+        if self.storage[hash_index] is None:
+            ll = LinkedList()
+            ll.insert_at_head(key, value)
+            self.storage[hash_index] = ll
+        else:
+            self.storage[hash_index].insert_at_head(key, value)
 
 
     def delete(self, key):
@@ -161,15 +162,15 @@ class HashTable:
         Implement this.
         """
         # Your code here
-        index = self.hash_index(key)
-        self.storage[index].value = None
+        # index = self.hash_index(key)
+        # self.storage[index].value = None
 
-        # hash_index = self.hash_index(key)
-        # if self.storage[hash_index] is None:
-        #     print("Key is not found.")
-        #     return
-        # else:
-        #     return self.storage[hash_index].remove(key)
+        hash_index = self.hash_index(key)
+        if self.storage[hash_index] is None:
+            print("Key is not found.")
+            return
+        else:
+            return self.storage[hash_index].remove(key)
 
 
     def get(self, key):
@@ -181,17 +182,17 @@ class HashTable:
         Implement this.
         """
         # Your code here
-        index = self.hash_index(key)
-        return self.storage[index].value
+        # index = self.hash_index(key)
+        # return self.storage[index].value
 
-        # hash_index = self.hash_index(key)
-        # if self.storage[hash_index] is None:
-        #     return None
-        # else:
-        #     entry = self.storage[hash_index].find(key)
-        #     if not entry:
-        #         return None
-        #     return entry.value
+        hash_index = self.hash_index(key)
+        if self.storage[hash_index] is None:
+            return None
+        else:
+            entry = self.storage[hash_index].find(key)
+            if not entry:
+                return None
+            return entry.value
 
 
     def resize(self, new_capacity):
